@@ -306,6 +306,7 @@ if (have_posts()) :
         .large-item { grid-row: auto; }
         .room-summary-section, .amenities-detail-grid { grid-template-columns: 1fr; }
         .sticky-content { justify-content: space-between; gap: 10px; }
+        .room-price-sticky { bottom: 0; }
     }
 </style>
 
@@ -415,8 +416,11 @@ if (have_posts()) :
             }
 
             .room-detail-swiper {
-                height: 550px;
-                background: #f8f8f8;
+                width: 100%;
+                height: auto;
+                aspect-ratio: 3 / 2;
+                max-height: 600px;
+                background: transparent;
             }
 
             .gallery-slide {
@@ -427,8 +431,8 @@ if (have_posts()) :
             .gallery-slide img {
                 width: 100%;
                 height: 100%;
-                object-fit: contain;
-                background: #f0f0f0; /* Light gray background for letterboxing */
+                object-fit: cover;
+                background: transparent;
             }
 
             .zoom-icon {

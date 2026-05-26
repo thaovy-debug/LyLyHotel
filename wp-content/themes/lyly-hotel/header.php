@@ -39,6 +39,28 @@ if (!function_exists('lyly_get_language_switch_url')) {
         return $switch_url . '#TRPLINKPROCESSED';
     }
 }
+
+if (!function_exists('lyly_get_lang_info')) {
+    function lyly_get_lang_info($code) {
+        $lang_details = array(
+            'vi' => array('label' => 'Tiếng Việt', 'short' => 'VI', 'flag' => '🇻🇳'),
+            'vi_vn' => array('label' => 'Tiếng Việt', 'short' => 'VI', 'flag' => '🇻🇳'),
+            'en_us' => array('label' => 'English', 'short' => 'EN', 'flag' => '🇬🇧'),
+            'en_gb' => array('label' => 'English', 'short' => 'EN', 'flag' => '🇬🇧'),
+            'en' => array('label' => 'English', 'short' => 'EN', 'flag' => '🇬🇧'),
+            'zh_cn' => array('label' => '中文', 'short' => 'ZH', 'flag' => '🇨🇳'),
+            'zh_tw' => array('label' => '中文', 'short' => 'ZH', 'flag' => '🇨🇳'),
+            'zh' => array('label' => '中文', 'short' => 'ZH', 'flag' => '🇨🇳'),
+        );
+        $code_lower = strtolower($code);
+        if (isset($lang_details[$code_lower])) {
+            return $lang_details[$code_lower];
+        }
+        // Fallback
+        $short = strtoupper(substr($code, 0, 2));
+        return array('label' => $code, 'short' => $short, 'flag' => '');
+    }
+}
 ?>
 
 <head>
@@ -224,8 +246,15 @@ if (!function_exists('lyly_get_language_switch_url')) {
         .dropdown-menu .box-img {
             overflow: hidden;
             width: 100%;
-            height: 120px;
             margin-bottom: 1rem;
+        }
+
+        .dropdown-menu .box-img img {
+            width: 100%;
+            height: 140px;
+            display: block;
+            object-fit: cover;
+            transition: transform 1s ease;
         }
 
         .dropdown-menu .image {
@@ -236,7 +265,8 @@ if (!function_exists('lyly_get_language_switch_url')) {
             transition: transform 1s ease;
         }
 
-        .dropdown-menu li:hover .image {
+        .dropdown-menu li:hover .image,
+        .dropdown-menu li:hover .box-img img {
             transform: scale(1.1);
         }
 
@@ -778,22 +808,173 @@ if (!function_exists('lyly_get_language_switch_url')) {
                                         opacity: 0 !important;
                                         pointer-events: none !important;
                                     }
-                                </style>
-                                <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <?php
-                                        if (function_exists('trp_custom_language_switcher')) {
-                                            global $TRP_LANGUAGE;
-                                            $current_lang = !empty($TRP_LANGUAGE) ? $TRP_LANGUAGE : get_locale();
-                                            $is_en = (strpos($current_lang, 'en') === 0);
-                                            $target_lang = $is_en ? 'vi' : 'en';
-                                            $short_code = $is_en ? 'VI' : 'EN';
-                                            $switch_url = lyly_get_language_switch_url($target_lang);
-                                            echo '<a class="nav-link" href="' . esc_url($switch_url) . '" data-no-translation-href>' . esc_html($short_code) . '</a>';
+                                    /* Desktop Language Switcher (Transparent to Solid White on Hover) */
+                                    @media (min-width: 992px) {
+                                        /* Common Transitions */
+                                        .header-left .trp-shortcode-switcher {
+                                            transition: all 0.3s ease !important;
                                         }
-                                        ?>
-                                    </li>
-                                </ul>
+                                        .header-left .trp-shortcode-switcher .trp-language-item-name {
+                                            transition: color 0.3s ease !important;
+                                        }
+                                        .header-left .trp-shortcode-switcher .trp-shortcode-arrow path {
+                                            transition: stroke 0.3s ease !important;
+                                        }
+
+                                        /* Default state on Transparent Header (Non-hovered header) */
+                                        .header.header-transparent:not(:hover) .header-left .trp-shortcode-switcher {
+                                            background: transparent !important;
+                                            border: 1px solid transparent !important;
+                                            box-shadow: none !important;
+                                        }
+                                        .header.header-transparent:not(:hover) .header-left .trp-shortcode-switcher .trp-language-item-name {
+                                            color: #ffffff !important;
+                                        }
+                                        .header.header-transparent:not(:hover) .header-left .trp-shortcode-switcher .trp-shortcode-arrow path {
+                                            stroke: #ffffff !important;
+                                        }
+
+                                        /* Hover state on Transparent Header OR Scrolled / Solid Header default state */
+                                        .header.header-transparent:hover .header-left .trp-shortcode-switcher,
+                                        .header:not(.header-transparent) .header-left .trp-shortcode-switcher {
+                                            background: transparent !important;
+                                            border: 1px solid transparent !important;
+                                            box-shadow: none !important;
+                                        }
+                                        .header.header-transparent:hover .header-left .trp-shortcode-switcher .trp-language-item-name,
+                                        .header:not(.header-transparent) .header-left .trp-shortcode-switcher .trp-language-item-name {
+                                            color: var(--main-color-orange, #dfab49) !important;
+                                        }
+                                        .header.header-transparent:hover .header-left .trp-shortcode-switcher .trp-shortcode-arrow path,
+                                        .header:not(.header-transparent) .header-left .trp-shortcode-switcher .trp-shortcode-arrow path {
+                                            stroke: var(--main-color-orange, #dfab49) !important;
+                                        }
+
+                                        /* Hover state specifically on the switcher wrapper (on any header state) */
+                                        .header-left .trp-shortcode-switcher__wrapper:hover .trp-shortcode-switcher {
+                                            background: #ffffff !important;
+                                            border: 1px solid rgba(20, 56, 82, 0.1) !important;
+                                        }
+                                        .header-left .trp-shortcode-switcher__wrapper:hover .trp-shortcode-switcher .trp-language-item-name {
+                                            color: var(--main-color-orange, #dfab49) !important;
+                                        }
+                                        .header-left .trp-shortcode-switcher__wrapper:hover .trp-shortcode-switcher .trp-shortcode-arrow path {
+                                            stroke: var(--main-color-orange, #dfab49) !important;
+                                        }
+                                        
+                                        /* Options Dropdown list styling */
+                                        .header-left .trp-shortcode-switcher .trp-switcher-dropdown-list {
+                                            background: #ffffff !important;
+                                            border: 1px solid rgba(20, 56, 82, 0.1) !important;
+                                            border-top: none !important;
+                                        }
+                                        .header-left .trp-shortcode-switcher .trp-switcher-dropdown-list .trp-language-item .trp-language-item-name {
+                                            color: #143852 !important;
+                                        }
+                                        .header-left .trp-shortcode-switcher .trp-switcher-dropdown-list .trp-language-item:hover {
+                                            background: #f3f3f3 !important;
+                                        }
+                                        .header-left .trp-shortcode-switcher .trp-switcher-dropdown-list .trp-language-item:hover .trp-language-item-name {
+                                            color: var(--main-color-orange, #dfab49) !important;
+                                        }
+                                    }
+                                    
+                                    /* Mobile Language Switcher Wrapper & Centering & Vertical Stacking */
+                                    @media (max-width: 991.98px) {
+                                        .mobile-language-switcher {
+                                            display: flex !important;
+                                            justify-content: center !important;
+                                            align-items: center !important;
+                                            text-align: center !important;
+                                            width: 100% !important;
+                                            margin-top: 25px !important;
+                                            margin-bottom: 25px !important;
+                                        }
+                                        .mobile-language-switcher .trp-shortcode-switcher__wrapper {
+                                            display: inline-block !important;
+                                            width: 170px !important;
+                                            margin: 0 auto !important;
+                                            float: none !important;
+                                            overflow: visible !important;
+                                            position: relative !important;
+                                        }
+                                        .mobile-language-switcher .trp-shortcode-switcher {
+                                            display: block !important;
+                                            margin: 0 auto !important;
+                                            float: none !important;
+                                            width: auto !important;
+                                            overflow: visible !important;
+                                            background: transparent !important;
+                                            border: none !important;
+                                            box-shadow: none !important;
+                                        }
+                                        .mobile-language-switcher .trp-language-item-name {
+                                            color: var(--main-color-orange, #dfab49) !important;
+                                            text-transform: uppercase !important;
+                                            font-weight: 500 !important;
+                                            font-family: var(--main-font-family, 'Montserrat', sans-serif) !important;
+                                            letter-spacing: 1px !important;
+                                        }
+                                        .mobile-language-switcher .trp-shortcode-arrow path {
+                                            stroke: var(--main-color-orange, #dfab49) !important;
+                                        }
+                                        .mobile-language-switcher .trp-language-switcher-inner {
+                                            display: flex !important;
+                                            flex-direction: column !important;
+                                            align-items: center !important;
+                                            width: 100% !important;
+                                            overflow: visible !important;
+                                        }
+                                        .mobile-language-switcher .trp-current-language-item__wrapper {
+                                            display: flex !important;
+                                            align-items: center !important;
+                                            justify-content: flex-start !important;
+                                            width: 100% !important;
+                                            border: none !important;
+                                            background: transparent !important;
+                                            padding-left: 20px !important;
+                                        }
+                                        .mobile-language-switcher .trp-switcher-dropdown-list {
+                                            width: 100% !important;
+                                            margin: 5px 0 0 0 !important;
+                                            padding: 0 !important;
+                                            list-style: none !important;
+                                            overflow: visible !important;
+                                            max-height: none !important;
+                                            background: #ffffff !important;
+                                            border: 1px solid rgba(20, 56, 82, 0.1) !important;
+                                            min-width: 150px !important;
+                                            position: absolute !important;
+                                            z-index: 1000 !important;
+                                        }
+                                        .mobile-language-switcher .trp-switcher-dropdown-list .trp-language-item {
+                                            justify-content: flex-start !important;
+                                            align-items: center !important;
+                                            width: 100% !important;
+                                        }
+                                        .mobile-language-switcher .trp-switcher-dropdown-list .trp-language-item a {
+                                            display: flex !important;
+                                            justify-content: flex-start !important;
+                                            align-items: center !important;
+                                            width: 100% !important;
+                                            padding-left: 20px !important;
+                                        }
+                                        .mobile-language-switcher .trp-switcher-dropdown-list .trp-language-item .trp-language-item-name {
+                                            color: #143852 !important;
+                                        }
+                                        .mobile-language-switcher .trp-switcher-dropdown-list .trp-language-item:hover {
+                                            background: #f3f3f3 !important;
+                                        }
+                                        .mobile-language-switcher .trp-switcher-dropdown-list .trp-language-item:hover .trp-language-item-name {
+                                            color: var(--main-color-orange, #dfab49) !important;
+                                        }
+                                    }
+                                </style>
+                                <?php
+                                if (class_exists('TRP_Translate_Press')) {
+                                    echo do_shortcode('[language-switcher]');
+                                }
+                                ?>
                             </div>
 
                             <div class="header-center d-flex justify-content-center mx-lg-5">
@@ -863,9 +1044,7 @@ if (!function_exists('lyly_get_language_switch_url')) {
                                                     <li>
                                                         <a href="<?php echo esc_url($link); ?>">
                                                             <div class="box-img">
-                                                                <div class="image"
-                                                                    style="background-image: url('<?php echo esc_url($img_url); ?>')">
-                                                                </div>
+                                                                <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($branch->name); ?>">
                                                             </div>
                                                         </a>
                                                         <h4 class="text-uppercase">
@@ -891,9 +1070,7 @@ if (!function_exists('lyly_get_language_switch_url')) {
                                             <li>
                                                 <a href="<?php echo site_url('/about'); ?>">
                                                     <div class="box-img">
-                                                        <div class="image"
-                                                            style="background-image: url('https://malibuhotel.com.vn/files/sites/site_70/site_70_header/about-header.jpg')">
-                                                        </div>
+                                                        <img src="https://malibuhotel.com.vn/files/sites/site_70/site_70_header/about-header.jpg" alt="Giới thiệu">
                                                     </div>
                                                 </a>
                                                 <h4 class="text-uppercase"><a
@@ -903,9 +1080,7 @@ if (!function_exists('lyly_get_language_switch_url')) {
                                             <li>
                                                 <a href="<?php echo site_url('/faqs'); ?>">
                                                     <div class="box-img">
-                                                        <div class="image"
-                                                            style="background-image: url('https://malibuhotel.com.vn/files/sites/site_70/site_70_header/faqs-header.jpg')">
-                                                        </div>
+                                                        <img src="https://malibuhotel.com.vn/files/sites/site_70/site_70_header/faqs-header.jpg" alt="Câu hỏi thường gặp">
                                                     </div>
                                                 </a>
                                                 <h4 class="text-uppercase"><a
@@ -915,9 +1090,7 @@ if (!function_exists('lyly_get_language_switch_url')) {
                                             <li>
                                                 <a href="<?php echo site_url('/contact'); ?>">
                                                     <div class="box-img">
-                                                        <div class="image"
-                                                            style="background-image: url('https://malibuhotel.com.vn/files/sites/site_70/site_70_header/contact-header.jpg')">
-                                                        </div>
+                                                        <img src="https://malibuhotel.com.vn/files/sites/site_70/site_70_header/contact-header.jpg" alt="Liên hệ">
                                                     </div>
                                                 </a>
                                                 <h4 class="text-uppercase"><a
@@ -927,9 +1100,7 @@ if (!function_exists('lyly_get_language_switch_url')) {
                                             <li>
                                                 <a href="<?php echo site_url('/lyly-group'); ?>">
                                                     <div class="box-img">
-                                                        <div class="image"
-                                                            style="background-image: url('https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779162772/LyLyGr2_oqeglr.jpg'); background-size: contain !important; background-repeat: no-repeat !important; background-position: center !important;">
-                                                        </div>
+                                                        <img src="https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779162772/LyLyGr2_oqeglr.jpg" alt="Ly Ly Group" style="object-position: bottom;">
                                                     </div>
                                                 </a>
                                                 <h4 class="text-uppercase"><a
@@ -939,8 +1110,8 @@ if (!function_exists('lyly_get_language_switch_url')) {
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="btn-book-now-header ms-lg-3" href="#"
-                                            onclick="handleFindRoom(); return false;">ĐẶT PHÒNG</a>
+                                        <a class="btn-book-now-header ms-lg-3" href="https://zalo.me/0913906650"
+                                            target="_blank" rel="noopener noreferrer">LIÊN HỆ ĐẶT PHÒNG</a>
                                     </li>
                                 </ul>
                             </div>
@@ -949,14 +1120,8 @@ if (!function_exists('lyly_get_language_switch_url')) {
                         <!-- Dynamic Language Switcher at the bottom of the mobile menu -->
                         <div class="mobile-language-switcher d-lg-none">
                             <?php
-                            if (function_exists('trp_custom_language_switcher')) {
-                                global $TRP_LANGUAGE;
-                                $current_lang = !empty($TRP_LANGUAGE) ? $TRP_LANGUAGE : get_locale();
-                                $is_en = (strpos($current_lang, 'en') === 0);
-                                $target_lang = $is_en ? 'vi' : 'en';
-                                $short_code = $is_en ? 'VI' : 'EN';
-                                $switch_url = lyly_get_language_switch_url($target_lang);
-                                echo '<a class="mobile-lang-link" href="' . esc_url($switch_url) . '" data-no-translation-href>' . esc_html($short_code) . '</a>';
+                            if (class_exists('TRP_Translate_Press')) {
+                                echo do_shortcode('[language-switcher]');
                             }
                             ?>
                         </div>

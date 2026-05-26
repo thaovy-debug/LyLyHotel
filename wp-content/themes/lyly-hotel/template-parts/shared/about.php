@@ -7,7 +7,8 @@
     <div class="container">
         <div class="row align-items-center mb-5">
             <div class="col-lg-6 p-0">
-                <img src="https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779432359/bgLyLy_wxotp1.jpg" class="img-fluid w-100" alt="About LyLy Hotel">
+                <img src="https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779164959/gr6_fxbqst.jpg" class="img-fluid w-100" alt="LyLy Hotel - Chi nhánh 1">
+                <img src="https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779432359/bgLyLy_wxotp1.jpg" class="img-fluid w-100" alt="LyLy Hotel 2 - Chi nhánh 2">
             </div>
             <div class="col-lg-6 bg-dark text-white p-5 d-flex flex-column justify-content-center" style="min-height: 400px;">
                 <h6 class="text-uppercase mb-2" style="color: #FFCC66;">WELCOME TO LYLY HOTEL</h6>
