@@ -130,4 +130,7 @@ add_action('customize_register', 'lyly_hotel_customize_register');
 
 // Include Custom Admin Gallery Page
 require_once get_template_directory() . '/inc/admin-gallery.php';
+
+// Include Custom Post Type cho Ưu đãi
+require_once get_template_directory() . '/inc/cpt-offers.php';
 ?>

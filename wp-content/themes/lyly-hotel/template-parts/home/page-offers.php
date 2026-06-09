@@ -143,68 +143,59 @@ get_header();
                                                 <div class="px-0 py-3">
                                                     <div class="row mt-4">
                                                         
-                                                        <!-- Offer 1 -->
-                                                        <div class="col-12 col-md-4 offer-box">
-                                                            <a href="<?php echo site_url('/offer/free-upgrade'); ?>">
-                                                                <div class="div-effect">
-                                                                    <div class="position-relative">
-                                                                        <div class="background"></div>
-                                                                        <div class="post" style="background-image: url('https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779164959/gr6_fxbqst.jpg');"></div>
+                                                        <?php
+                                                        $args = array(
+                                                            'post_type' => 'lyly_offer',
+                                                            'posts_per_page' => -1,
+                                                            'meta_query' => array(
+                                                                'relation' => 'OR',
+                                                                array(
+                                                                    'key' => '_lyly_offer_status',
+                                                                    'value' => 'active',
+                                                                    'compare' => '='
+                                                                ),
+                                                                array(
+                                                                    'key' => '_lyly_offer_status',
+                                                                    'compare' => 'NOT EXISTS'
+                                                                )
+                                                            )
+                                                        );
+                                                        $offers_query = new WP_Query($args);
+                                                        if ( $offers_query->have_posts() ) :
+                                                            while ( $offers_query->have_posts() ) : $offers_query->the_post();
+                                                                $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                                                                if (empty($thumbnail_url)) {
+                                                                    $thumbnail_url = 'https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779164959/gr6_fxbqst.jpg'; // fallback
+                                                                }
+                                                        ?>
+                                                                <div class="col-12 col-md-4 offer-box">
+                                                                    <a href="<?php the_permalink(); ?>">
+                                                                        <div class="div-effect">
+                                                                            <div class="position-relative">
+                                                                                <div class="background"></div>
+                                                                                <div class="post" style="background-image: url('<?php echo esc_url($thumbnail_url); ?>');"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mt-3">
+                                                                            <h1 class="py-2 text-uppercase mb-0"><?php the_title(); ?></h1>
+                                                                        </div>
+                                                                        <div class="lead text-black mt-2" style="font-size: 1rem; color: #555 !important;">
+                                                                            <?php echo get_the_excerpt(); ?>
+                                                                        </div>
+                                                                    </a>
+                                                                    <div class="py-2 my-3">
+                                                                        <a href="<?php the_permalink(); ?>" class="font-bolder text-dark" style="text-decoration: underline; font-weight: 600;">CHI TIẾT</a>
                                                                     </div>
                                                                 </div>
-                                                                <div class="mt-3">
-                                                                    <h1 class="py-2 text-uppercase mb-0">Nâng Cấp Miễn Phí</h1>
-                                                                </div>
-                                                                <div class="lead text-black mt-2" style="font-size: 1rem; color: #555 !important;">
-                                                                    Trải nghiệm hạng phòng cao cấp hơn hoàn toàn miễn phí khi đặt phòng trực tiếp tại Khách sạn Ly Ly.
-                                                                </div>
-                                                            </a>
-                                                            <div class="py-2 my-3">
-                                                                <a href="<?php echo site_url('/offer/free-upgrade'); ?>" class="font-bolder text-dark" style="text-decoration: underline; font-weight: 600;">CHI TIẾT</a>
+                                                        <?php 
+                                                            endwhile; 
+                                                            wp_reset_postdata();
+                                                        else : 
+                                                        ?>
+                                                            <div class="col-12 text-center">
+                                                                <p>Hiện tại chưa có ưu đãi nào.</p>
                                                             </div>
-                                                        </div>
-
-                                                        <!-- Offer 2 -->
-                                                        <div class="col-12 col-md-4 offer-box">
-                                                            <a href="<?php echo site_url('/offer/summer-package'); ?>">
-                                                                <div class="div-effect">
-                                                                    <div class="position-relative">
-                                                                        <div class="background"></div>
-                                                                        <div class="post" style="background-image: url('https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779164815/gr5_ypj5re.jpg');"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mt-3">
-                                                                    <h1 class="py-2 text-uppercase mb-0">Ưu Đãi Nghỉ Dưỡng</h1>
-                                                                </div>
-                                                                <div class="lead text-black mt-2" style="font-size: 1rem; color: #555 !important;">
-                                                                    "Một tuyệt tác nghỉ dưỡng bên bãi biển tuyệt đẹp." Đặt phòng ngay để nhận ưu đãi hấp dẫn.
-                                                                </div>
-                                                            </a>
-                                                            <div class="py-2 my-3">
-                                                                <a href="<?php echo site_url('/offer/summer-package'); ?>" class="font-bolder text-dark" style="text-decoration: underline; font-weight: 600;">CHI TIẾT</a>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Offer 3 -->
-                                                        <div class="col-12 col-md-4 offer-box">
-                                                            <a href="<?php echo site_url('/offer/healing-escape'); ?>">
-                                                                <div class="div-effect">
-                                                                    <div class="position-relative">
-                                                                        <div class="background"></div>
-                                                                        <div class="post" style="background-image: url('https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779432359/bgLyLy_wxotp1.jpg');"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mt-3">
-                                                                    <h1 class="py-2 text-uppercase mb-0">Chuyến Đi Chữa Lành</h1>
-                                                                </div>
-                                                                <div class="lead text-black mt-2" style="font-size: 1rem; color: #555 !important;">
-                                                                    "Một kỳ nghỉ sang trọng bắt đầu từ không gian thoải mái, ẩm thực tinh tế và dịch vụ tận tâm."
-                                                                </div>
-                                                            </a>
-                                                            <div class="py-2 my-3">
-                                                                <a href="<?php echo site_url('/offer/healing-escape'); ?>" class="font-bolder text-dark" style="text-decoration: underline; font-weight: 600;">CHI TIẾT</a>
-                                                            </div>
-                                                        </div>
+                                                        <?php endif; ?>
 
                                                     </div>
                                                 </div>

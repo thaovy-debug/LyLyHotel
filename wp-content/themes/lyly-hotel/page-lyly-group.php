@@ -121,8 +121,6 @@ get_header();
                     <div class="group-content">
                         <h3>Ly Ly Hotel</h3>
                         <p>110-112 Đường Song Hành, Phường Bình Phú, TP. Hồ Chí Minh</p>
-
-                        <a href="<?php echo site_url('/lyly-hotel-1'); ?>" class="group-link">Xem chi tiết →</a>
                     </div>
                 </div>
             </div>
@@ -137,7 +135,6 @@ get_header();
                     <div class="group-content">
                         <h3>Ly Ly Hotel 2</h3>
                         <p>344A Đường Số 1, Phường An Lạc , TP. Hồ Chí Minh</p>
-                        <a href="<?php echo site_url('/lyly-hotel-2'); ?>" class="group-link">Xem chi tiết →</a>
                     </div>
                 </div>
             </div>

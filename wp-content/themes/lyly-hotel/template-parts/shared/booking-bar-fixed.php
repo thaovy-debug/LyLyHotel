@@ -3,10 +3,24 @@
  * Template Part: Shared - Fixed Booking Bar (Bottom)
  */
 $branches = get_terms(array('taxonomy' => 'lyly_branch', 'hide_empty' => false));
-$first_branch_name = !empty($branches) ? $branches[0]->name : 'Chọn chi nhánh';
-$first_branch_id = !empty($branches) ? $branches[0]->term_id : '';
-$first_branch_meta = $first_branch_id ? get_term_meta($first_branch_id, 'lyly_branch_meta', true) : array();
-$first_branch_address = isset($first_branch_meta['address']) ? $first_branch_meta['address'] : '';
+
+$current_branch_id = isset($_GET['branch']) && (int)$_GET['branch'] > 0 ? (int)$_GET['branch'] : (!empty($branches) ? $branches[0]->term_id : 0);
+$current_branch_name = 'Chọn chi nhánh';
+$current_branch_address = '';
+
+if ($current_branch_id > 0) {
+    $term = get_term($current_branch_id, 'lyly_branch');
+    if ($term && !is_wp_error($term)) {
+        $current_branch_name = $term->name;
+        $branch_meta = get_term_meta($term->term_id, 'lyly_branch_meta', true);
+        $current_branch_address = isset($branch_meta['address']) ? $branch_meta['address'] : '';
+    } elseif (!empty($branches)) {
+        $current_branch_id = $branches[0]->term_id;
+        $current_branch_name = $branches[0]->name;
+        $branch_meta = get_term_meta($branches[0]->term_id, 'lyly_branch_meta', true);
+        $current_branch_address = isset($branch_meta['address']) ? $branch_meta['address'] : '';
+    }
+}
 ?>
 
 <div id="lyly-fixed-booking-bar" class="lyly-booking-bar-wrapper">
@@ -14,12 +28,12 @@ $first_branch_address = isset($first_branch_meta['address']) ? $first_branch_met
         <div class="booking-bar-content d-flex align-items-stretch">
             <div class="booking-item branch-item flex-grow-1" onclick="togglePopup('popup-branch')">
                 <div class="item-label">Chi nhánh</div>
-                <div class="item-value" id="bar-branch-name"><?php echo esc_html($first_branch_name); ?></div>
+                <div class="item-value" id="bar-branch-name"><?php echo esc_html($current_branch_name); ?></div>
                 <div class="item-sub-value" id="bar-branch-address"
                     style="font-size: 0.7rem; color: rgba(0,0,0,0.5); font-weight: 400;">
-                    <?php echo esc_html($first_branch_address); ?>
+                    <?php echo esc_html($current_branch_address); ?>
                 </div>
-                <input type="hidden" id="bar-selected-branch" value="<?php echo esc_attr($first_branch_id); ?>">
+                <input type="hidden" id="bar-selected-branch" value="<?php echo esc_attr($current_branch_id); ?>">
                 <i class="bi bi-chevron-down ms-auto"></i>
 
                 <div id="popup-branch" class="booking-popup popup-branch-list">
@@ -489,7 +503,96 @@ $first_branch_address = isset($first_branch_meta['address']) ? $first_branch_met
 
     @media (max-width: 992px) {
         .lyly-booking-bar-wrapper {
-            display: none;
+            position: relative;
+            margin: 20px;
+            width: auto;
+            background: #fbc25e; /* Yellow background like Image 2 */
+            padding: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            z-index: 10;
+        }
+        .booking-bar-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            height: auto;
+            overflow: visible;
+        }
+        .booking-item {
+            background: #fff;
+            border-radius: 4px;
+            border: none !important;
+            padding: 10px 15px;
+            flex: 1 1 100%;
+        }
+        .branch-item {
+            width: 100%;
+            order: 1;
+        }
+        .date-item {
+            flex: 1 1 calc(50% - 3px);
+            min-width: calc(50% - 3px);
+            order: 2;
+        }
+        .guest-item {
+            flex: 1 1 100%;
+            order: 3;
+        }
+        .booking-btn-wrapper {
+            flex: 1 1 100%;
+            height: 45px;
+            margin-top: 4px;
+            order: 4;
+        }
+        .btn-find-room {
+            border-radius: 4px;
+            width: 100%;
+            height: 100%;
+            background: #000; /* or #0071c2 if blue is wanted, but user said keep tone */
+            font-size: 1rem;
+        }
+        
+        /* Typography adjustments */
+        .item-label {
+            font-size: 0.75rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .item-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .item-sub-value {
+            display: none; /* Hide address on mobile to save space */
+        }
+        
+        /* Hide icons for cleaner look like image 2 */
+        .booking-item i {
+            display: none !important;
+        }
+        
+        /* Adjust popups for mobile */
+        .booking-popup {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            transform: none !important;
+            margin-bottom: 0 !important;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+            z-index: 10001;
+            padding-bottom: 20px;
+        }
+        .popup-calendar-view {
+            padding: 15px !important;
+        }
+        .popup-guest-selector {
+            padding: 20px !important;
         }
     }
 </style>
@@ -505,6 +608,28 @@ $first_branch_address = isset($first_branch_meta['address']) ? $first_branch_met
         let selectedDates = [now, tomorrow];
 
         updateBarDates();
+
+        // Mobile Layout Manipulation
+        if (window.innerWidth <= 992) {
+            const bookingBar = document.getElementById('lyly-fixed-booking-bar');
+            if (bookingBar) {
+                // Define target anchors
+                const stayHero = document.querySelector('.stay-hero');
+                const stayPageMain = document.querySelector('main.stay-page');
+                const checkrateContainer = document.querySelector('.checkrate-results-container');
+                
+                if (stayHero) {
+                    stayHero.insertAdjacentElement('afterend', bookingBar);
+                } else if (checkrateContainer) {
+                    // Chèn vào bên trong để chịu tác động của padding-top
+                    checkrateContainer.insertBefore(bookingBar, checkrateContainer.firstChild);
+                } else if (stayPageMain) {
+                    stayPageMain.insertBefore(bookingBar, stayPageMain.firstChild);
+                } else {
+                    bookingBar.style.display = 'none'; // Hide on other pages
+                }
+            }
+        }
 
         const barFp = flatpickr("#lyly-calendar-inline-bar", {
             inline: true,
@@ -541,10 +666,17 @@ $first_branch_address = isset($first_branch_meta['address']) ? $first_branch_met
 
         window.selectBarBranch = function (id, name, address, e) {
             e.stopPropagation();
+            const currentId = document.getElementById('bar-selected-branch').value;
+            
             document.getElementById('bar-selected-branch').value = id;
             document.getElementById('bar-branch-name').innerText = name;
             document.getElementById('bar-branch-address').innerText = address;
             closePopups();
+            
+            if (currentId != id) {
+                // Tự động tìm phòng nếu chọn chi nhánh khác
+                handleFindRoom();
+            }
         };
 
         window.updateGuestCount = function (type, delta) {

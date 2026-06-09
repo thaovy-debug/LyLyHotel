@@ -574,10 +574,7 @@ if (have_posts()) :
                 <div class="price-main">Giá từ đ<?php echo number_format((int)$price_overnight); ?></div>
                 <div class="price-sub">1 đêm / 2 khách</div>
             </div>
-            <?php 
-            $zalo_no = function_exists('lyly_get_zalo_number') ? lyly_get_zalo_number() : '0941871644';
-            ?>
-            <button class="btn-select-room" onclick="window.open('https://zalo.me/<?php echo esc_js($zalo_no); ?>', '_blank')">ĐẶT PHÒNG</button>
+            <button class="btn-select-room" data-bs-toggle="modal" data-bs-target="#bookingContactModal">ĐẶT PHÒNG</button>
         </div>
     </div>
 </div>

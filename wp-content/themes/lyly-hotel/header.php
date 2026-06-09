@@ -1110,8 +1110,7 @@ if (!function_exists('lyly_get_lang_info')) {
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="btn-book-now-header ms-lg-3" href="https://zalo.me/0913906650"
-                                            target="_blank" rel="noopener noreferrer">LIÊN HỆ ĐẶT PHÒNG</a>
+                                        <a class="btn-book-now-header ms-lg-3" href="#" data-bs-toggle="modal" data-bs-target="#bookingContactModal">LIÊN HỆ ĐẶT PHÒNG</a>
                                     </li>
                                 </ul>
                             </div>
@@ -1185,27 +1184,40 @@ if (!function_exists('lyly_get_lang_info')) {
             const mobileDropdowns = document.querySelectorAll('.header-right .nav-item.dropdown');
             mobileDropdowns.forEach(dropdown => {
                 const link = dropdown.querySelector('.nav-link');
+                const icon = dropdown.querySelector('i.d-lg-none');
+                
+                if (icon) {
+                    icon.style.padding = '15px';
+                    icon.style.marginRight = '-15px';
+                }
+
                 if (link) {
                     link.addEventListener('click', function (e) {
                         if (window.innerWidth < 992) {
-                            e.preventDefault();
-                            e.stopPropagation();
+                            const isClickOnIcon = e.target.tagName.toLowerCase() === 'i' || e.target.closest('i');
+                            const href = link.getAttribute('href');
+                            const hasValidHref = href && href !== '#' && href !== '';
                             
-                            // Toggle self
-                            const isShown = dropdown.classList.contains('show');
-                            
-                            // Close other mobile dropdowns first
-                            mobileDropdowns.forEach(d => {
-                                d.classList.remove('show');
-                                const m = d.querySelector('.dropdown-menu');
-                                if (m) m.style.setProperty('display', 'none', 'important');
-                            });
-                            
-                            if (!isShown) {
-                                dropdown.classList.add('show');
-                                const menu = dropdown.querySelector('.dropdown-menu');
-                                if (menu) {
-                                    menu.style.setProperty('display', 'block', 'important');
+                            if (isClickOnIcon || !hasValidHref) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                
+                                // Toggle self
+                                const isShown = dropdown.classList.contains('show');
+                                
+                                // Close other mobile dropdowns first
+                                mobileDropdowns.forEach(d => {
+                                    d.classList.remove('show');
+                                    const m = d.querySelector('.dropdown-menu');
+                                    if (m) m.style.setProperty('display', 'none', 'important');
+                                });
+                                
+                                if (!isShown) {
+                                    dropdown.classList.add('show');
+                                    const menu = dropdown.querySelector('.dropdown-menu');
+                                    if (menu) {
+                                        menu.style.setProperty('display', 'block', 'important');
+                                    }
                                 }
                             }
                         }

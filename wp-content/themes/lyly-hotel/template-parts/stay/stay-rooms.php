@@ -118,6 +118,21 @@
         color: #666 !important;
     }
 
+    .room-actions {
+        display: flex;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .room-actions > a {
+        flex: 1;
+        text-align: center;
+        padding: 12px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     /* Carousel controls */
     .room-carousel .carousel-control-prev,
     .room-carousel .carousel-control-next {
@@ -193,14 +208,25 @@
             <?php
             if ($query->have_posts()) : 
                 // Hiển thị thông tin lọc nếu có
-                if ($checkin || $branch_id) {
-                    $branch_obj = $branch_id ? get_term($branch_id, 'lyly_branch') : null;
-                    echo '<div class="col-12 mb-4"><div class="alert alert-light border-0 shadow-sm p-3">';
-                    echo '<strong>Đang hiển thị phòng tại:</strong> ' . ($branch_obj ? $branch_obj->name : 'Tất cả chi nhánh');
-                    if ($checkin) echo ' | <strong>Thời gian:</strong> ' . $checkin . ' - ' . $checkout;
-                    if ($guests) echo ' | <strong>Khách:</strong> ' . $guests . ' người lớn, ' . $children . ' trẻ em';
-                    echo '</div></div>';
+                $branch_obj = $branch_id ? get_term($branch_id, 'lyly_branch') : null;
+                $ward_name = '';
+                if ($branch_obj) {
+                    $slug_lower = strtolower($branch_obj->slug);
+                    if (strpos($slug_lower, '2') !== false || strpos($slug_lower, 'an-lac') !== false || strpos($slug_lower, 'cn2') !== false) {
+                        $ward_name = 'Phường An Lạc';
+                    } else {
+                        $ward_name = 'Phường Bình Phú';
+                    }
                 }
+                
+                $display_text = "Hiển thị tất cả phòng của Ly Ly Hotel";
+                if ($ward_name) {
+                    $display_text .= " - " . $ward_name;
+                }
+
+                echo '<div class="col-12 mb-4"><div class="alert alert-light border-0 shadow-sm p-3 text-center" style="font-weight: 500; font-size: 1.05rem; color: #333;">';
+                echo esc_html($display_text);
+                echo '</div></div>';
 
                 $room_idx = 0;
                 while ($query->have_posts()) : $query->the_post();

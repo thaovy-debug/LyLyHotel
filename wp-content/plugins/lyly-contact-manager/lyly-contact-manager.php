@@ -31,11 +31,31 @@ function lyly_contact_manager_defaults()
         'general_phone' => '0941 871 644',
         'branch_1_name' => 'Ly Ly Hotel - Bình Phú',
         'branch_1_address' => '110-112 Đường Song Hành, Phường Bình Phú, TP. Hồ Chí Minh',
-        'branch_1_phone' => '028 3755 8598 - 028 3755 8599',
+        'branch_1_phone' => '028 3755 8599',
         'branch_2_name' => 'Ly Ly Hotel 2 - An Lạc',
         'branch_2_address' => '344A Đường Số 1, Phường An Lạc, TP. Hồ Chí Minh',
-        'branch_2_phone' => '028 2222 3579 - 0983 479 689',
+        'branch_2_phone' => '028 2222 3579',
     );
+}
+
+// Update options to new phone numbers automatically
+add_action('init', 'lyly_contact_manager_update_old_phones');
+function lyly_contact_manager_update_old_phones() {
+    $options = get_option('lyly_contact_settings');
+    if (is_array($options)) {
+        $updated = false;
+        if (isset($options['branch_1_phone']) && ($options['branch_1_phone'] === '028 3755 8598 - 028 3755 8599' || $options['branch_1_phone'] === '028 3755 8598 - 028 3755 8599')) {
+            $options['branch_1_phone'] = '028 3755 8599';
+            $updated = true;
+        }
+        if (isset($options['branch_2_phone']) && ($options['branch_2_phone'] === '028 2222 3579 - 0983 479 689' || $options['branch_2_phone'] === '028 2222 3579 - 0983 479 689')) {
+            $options['branch_2_phone'] = '028 2222 3579';
+            $updated = true;
+        }
+        if ($updated) {
+            update_option('lyly_contact_settings', $options);
+        }
+    }
 }
 
 // 3. Hàm lấy cấu hình (có fallback về mặc định)

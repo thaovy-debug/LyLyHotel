@@ -66,7 +66,7 @@ $months_vi = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Thán
     }
 
     .checkrate-results-container {
-        padding: 60px 0;
+        padding: 120px 0 60px 0;
         background-color: #f8f9fa;
         min-height: 600px;
     }
@@ -164,44 +164,7 @@ $months_vi = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Thán
     }
 </style>
 
-<div class="checkrate-header-bar" onclick="window.location.href='<?php echo home_url(); ?>'">
-    <div class="container">
-        <div class="row align-items-center text-center">
-            <!-- Check In -->
-            <div class="col-md-3">
-                <div class="nav-checkrate-title">NHẬN PHÒNG</div>
-                <div class="d-flex align-items-center justify-content-center gap-3">
-                    <div class="nav-checkrate-date"><?php echo $checkin_date->format('d'); ?></div>
-                    <div class="text-start">
-                        <div class="nav-checkrate-month"><?php echo $months_vi[intval($checkin_date->format('m')) - 1]; ?></div>
-                        <div class="nav-checkrate-month"><?php echo $checkin_date->format('Y'); ?></div>
-                    </div>
-                </div>
-            </div>
-            <!-- Check Out -->
-            <div class="col-md-3">
-                <div class="nav-checkrate-title">TRẢ PHÒNG</div>
-                <div class="d-flex align-items-center justify-content-center gap-3">
-                    <div class="nav-checkrate-date"><?php echo $checkout_date->format('d'); ?></div>
-                    <div class="text-start">
-                        <div class="nav-checkrate-month"><?php echo $months_vi[intval($checkout_date->format('m')) - 1]; ?></div>
-                        <div class="nav-checkrate-month"><?php echo $checkout_date->format('Y'); ?></div>
-                    </div>
-                </div>
-            </div>
-            <!-- Branch -->
-            <div class="col-md-3">
-                <div class="nav-checkrate-title">KHÁCH SẠN</div>
-                <div class="nav-checkrate-date" style="font-size: 1.5rem; font-weight: 700;"><?php echo $branch_name; ?></div>
-            </div>
-            <!-- Guests -->
-            <div class="col-md-3 border-start border-dark">
-                <div class="nav-checkrate-title">KHÁCH</div>
-                <div class="nav-checkrate-date"><?php echo $guests; ?></div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="checkrate-results-container">
     <div class="container">
@@ -312,10 +275,7 @@ $months_vi = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Thán
                                     <div class="price-value"><?php echo number_format($price_overnight ?: 0); ?>đ</div>
                                     <div class="price-unit">/đêm</div>
                                 </div>
-                                <?php 
-                                $zalo_no = function_exists('lyly_get_zalo_number') ? lyly_get_zalo_number() : '0941871644';
-                                ?>
-                                <a href="https://zalo.me/<?php echo esc_attr($zalo_no); ?>" target="_blank" class="btn btn-book-room">ĐẶT PHÒNG</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#bookingContactModal" class="btn btn-book-room">ĐẶT PHÒNG</a>
                                 <a href="<?php the_permalink(); ?>" class="btn btn-link text-dark mt-2 text-decoration-none">Xem chi tiết <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>

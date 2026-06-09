@@ -19,7 +19,7 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        Quý khách có thể đặt phòng trực tiếp thông qua nút "BOOK NOW" trên website hoặc liên hệ hotline (+84) 941 871 644.
+                        Quý khách có thể đặt phòng trực tiếp thông qua nút "BOOK NOW" trên website hoặc liên hệ qua các số điện thoại: <?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_name') : 'Chi nhánh 1'); ?> (<?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_phone') : '028 3755 8599'); ?>) - <?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_name') : 'Chi nhánh 2'); ?> (<?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_phone') : '028 2222 3579'); ?>).
                     </div>
                 </div>
             </div>

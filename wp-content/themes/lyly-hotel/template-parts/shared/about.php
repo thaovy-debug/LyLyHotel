@@ -21,12 +21,12 @@
             <div class="col-md-9 mx-auto">
                 <div class="mb-5">
                     <h2 class="text-uppercase border-bottom pb-2 mb-4">LỊCH SỬ</h2>
-                    <p>Khách sạn LyLy Hotel đi vào hoạt động tháng 4/2016 với cơ cấu tòa nhà 23 tầng gồm 2 tầng hầm, 6 tầng dịch vụ trong đó có sảnh hội nghị/tiệc, spa, pool bar, hồ bơi, phòng Gym, Khu giải trí và phòng lưu trú với tổng số 197 phòng nghỉ.</p>
+                    <p>Khách sạn LyLy Hotel đi vào hoạt động với mong muốn mang đến không gian lưu trú thoải mái, tiện nghi cho quý khách. Hệ thống phòng nghỉ của chúng tôi luôn được chăm chút tỉ mỉ, đáp ứng nhu cầu nghỉ ngơi và thư giãn của khách hàng khi đến với thành phố nhộn nhịp.</p>
                 </div>
 
                 <div class="mb-5">
                     <h2 class="text-uppercase border-bottom pb-2 mb-4">KIẾN TRÚC</h2>
-                    <p>Khách sạn được thiết kế từ nguồn cảm hứng kiến trúc Châu Âu Sang trọng, hiện đại. Tất cả các phòng tại Khách sạn đều có tầm nhìn hướng ra đại dương và một phần ôm trọn thành phố xinh đẹp.</p>
+                    <p>Khách sạn được thiết kế theo phong cách hiện đại, tinh tế và ấm cúng. Tất cả các phòng đều được trang bị đầy đủ tiện nghi, mang lại cho quý khách cảm giác thân thuộc và thoải mái như đang ở chính ngôi nhà của mình.</p>
                 </div>
 
                 <div class="mb-5">

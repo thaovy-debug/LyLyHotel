@@ -129,7 +129,7 @@
                         <i class="bi bi-telephone-fill"></i>
                         <p><strong>Điện thoại:</strong> 
                             <?php 
-                            $phone_1 = function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_phone') : '028 3755 8598 - 028 3755 8599';
+                            $phone_1 = function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_phone') : '028 3755 8599';
                             echo esc_html($phone_1);
                             ?>
                         </p>
@@ -162,7 +162,7 @@
                         <i class="bi bi-telephone-fill"></i>
                         <p><strong>Điện thoại:</strong> 
                             <?php 
-                            $phone_2 = function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_phone') : '028 2222 3579 - 0983 479 689';
+                            $phone_2 = function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_phone') : '028 2222 3579';
                             echo esc_html($phone_2);
                             ?>
                         </p>

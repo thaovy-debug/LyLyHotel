@@ -95,7 +95,7 @@
                     <span class="branch-name"><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_name') : 'Ly Ly Hotel - Bình Phú'); ?></span>
                     <p><i class="bi bi-geo-alt-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_address') : '110-112 Đường Song Hành, Phường Bình Phú, TP. Hồ Chí Minh'); ?>
                     </p>
-                    <p><i class="bi bi-telephone-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_phone') : '028 3755 8598 - 028 3755 8599'); ?></p>
+                    <p><i class="bi bi-telephone-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_phone') : '028 3755 8599'); ?></p>
                 </div>
             </div>
 
@@ -105,7 +105,7 @@
                 <div class="branch-info">
                     <span class="branch-name"><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_name') : 'Ly Ly Hotel 2 - An Lạc'); ?></span>
                     <p><i class="bi bi-geo-alt-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_address') : '344A Đường Số 1, Phường An Lạc, TP. Hồ Chí Minh'); ?></p>
-                    <p><i class="bi bi-telephone-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_phone') : '028 2222 3579 - 0983 479 689'); ?></p>
+                    <p><i class="bi bi-telephone-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_phone') : '028 2222 3579'); ?></p>
                 </div>
             </div>
 
@@ -166,6 +166,168 @@
         }
     });
 </script>
+
+<!-- Custom Booking Contact Modal -->
+<div class="modal fade" id="bookingContactModal" tabindex="-1" aria-labelledby="bookingContactModalLabel" aria-hidden="true" style="z-index: 10650;">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background-color: #16192c; color: #fff; border: 1px solid rgba(251, 194, 94, 0.2); border-radius: 16px; font-family: 'Montserrat', sans-serif; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+            <!-- Modal Header -->
+            <div class="modal-header border-0 pb-0" style="padding: 24px 24px 10px 24px;">
+                <h5 class="modal-title w-100 text-center text-uppercase fw-bold" id="bookingContactModalLabel" style="color: #fbc25e; letter-spacing: 2px; font-size: 1.4rem;">Liên Hệ Đặt Phòng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="box-shadow: none;"></button>
+            </div>
+            
+            <div class="modal-body" style="padding: 24px;">
+                <!-- Step 1: Branch Selection -->
+                <div id="booking-step-select">
+                    <p class="text-center mb-4" style="color: #ccc; font-weight: 300;">Vui lòng chọn chi nhánh Quý khách muốn đặt phòng:</p>
+                    
+                    <div class="row g-4 justify-content-center">
+                        <!-- Branch 1 Card -->
+                        <div class="col-md-6">
+                            <div class="branch-contact-card">
+                                <div class="branch-card-img-wrap">
+                                    <img src="https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779164959/gr6_fxbqst.jpg" alt="Ly Ly Hotel - Bình Phú">
+                                </div>
+                                <div class="branch-card-info">
+                                    <h4 class="branch-card-title"><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_name') : 'Ly Ly Hotel - Bình Phú'); ?></h4>
+                                    <p class="branch-card-address"><i class="bi bi-geo-alt-fill me-2" style="color: #fbc25e;"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_address') : '110-112 Đường Song Hành, Phường Bình Phú, TP. Hồ Chí Minh'); ?></p>
+                                    <a href="tel:<?php echo esc_attr(str_replace(' ', '', function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_phone') : '02837558599')); ?>" class="branch-card-select-btn"><i class="bi bi-telephone-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_1_phone') : '028 3755 8599'); ?></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Branch 2 Card -->
+                        <div class="col-md-6">
+                            <div class="branch-contact-card">
+                                <div class="branch-card-img-wrap">
+                                    <img src="https://res.cloudinary.com/ddtv5nc3t/image/upload/v1779164815/gr5_ypj5re.jpg" alt="Ly Ly Hotel 2 - An Lạc">
+                                </div>
+                                <div class="branch-card-info">
+                                    <h4 class="branch-card-title"><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_name') : 'Ly Ly Hotel 2 - An Lạc'); ?></h4>
+                                    <p class="branch-card-address"><i class="bi bi-geo-alt-fill me-2" style="color: #fbc25e;"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_address') : '344A Đường Số 1, Phường An Lạc, TP. Hồ Chí Minh'); ?></p>
+                                    <a href="tel:<?php echo esc_attr(str_replace(' ', '', function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_phone') : '02822223579')); ?>" class="branch-card-select-btn"><i class="bi bi-telephone-fill me-2"></i><?php echo esc_html(function_exists('lyly_get_contact_option') ? lyly_get_contact_option('branch_2_phone') : '028 2222 3579'); ?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .branch-contact-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        overflow: hidden;
+        height: 100%;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .branch-card-img-wrap {
+        height: 180px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .branch-card-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .branch-card-info {
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .branch-card-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 12px;
+        transition: color 0.3s;
+    }
+    
+    .branch-card-address {
+        font-size: 0.88rem;
+        color: #bbb;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        font-weight: 300;
+    }
+    
+    .branch-card-select-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        background: #fbc25e;
+        color: #16192c;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 8px;
+        border: 1px solid #fbc25e;
+        transition: all 0.3s;
+        text-decoration: none !important;
+    }
+    
+    /* Responsive styles for Laptop / Desktop vs Mobile */
+    @media (min-width: 992px) {
+        .branch-contact-card {
+            cursor: default !important;
+            transform: none !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        .branch-card-img-wrap img {
+            transform: none !important;
+        }
+        .branch-card-title {
+            color: #fff !important;
+        }
+        .branch-card-select-btn {
+            background: #fbc25e !important;
+            color: #16192c !important;
+            border-color: #fbc25e !important;
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+    }
+    
+    @media (max-width: 991px) {
+        .branch-contact-card {
+            cursor: pointer;
+        }
+        .branch-contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(251, 194, 94, 0.4);
+            box-shadow: 0 10px 25px rgba(251, 194, 94, 0.1);
+        }
+        .branch-contact-card:hover .branch-card-img-wrap img {
+            transform: scale(1.05);
+        }
+        .branch-contact-card:hover .branch-card-title {
+            color: #fbc25e;
+        }
+        .branch-card-select-btn:hover {
+            background: #e5b352;
+            border-color: #e5b352;
+            color: #16192c;
+        }
+    }
+</style>
 
 <?php get_template_part('template-parts/shared/booking-bar-fixed'); ?>
 
